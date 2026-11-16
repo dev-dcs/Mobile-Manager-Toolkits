@@ -1,0 +1,5 @@
+# private components, same format as config/components.list.
+# A line here with the same name replaces the public one (e.g. a fork of qdl
+# you are testing). The recipe goes in private/recipes/<name>.sh.
+#
+# qdl|git|https://github.com/you/qdl|my-branch|<commit>|-|branch:my-branch|

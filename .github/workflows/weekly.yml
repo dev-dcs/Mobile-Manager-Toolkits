@@ -1,0 +1,67 @@
+name: weekly
+
+# Once a week: pull the newest upstream commits into the pinned sources, and if
+# anything moved, cut a new patch release. The build + GitHub release itself is
+# done by build.yml, which fires on the tag this job pushes.
+
+on:
+  schedule:
+    - cron: '41 7 * * 1'
+  workflow_dispatch:
+    inputs:
+      force:
+        description: release even if no source moved
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: weekly
+  cancel-in-progress: false
+
+jobs:
+  roll:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: bump pinned sources to upstream
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: scripts/upstream-check.sh --write --md report.md
+
+      - name: decide
+        id: d
+        run: |
+          if ! git diff --quiet -- config/components.list; then
+            echo "changed=1" >> "$GITHUB_OUTPUT"
+          elif [ "${{ inputs.force }}" = "true" ]; then
+            echo "changed=1" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=0" >> "$GITHUB_OUTPUT"
+            echo "Nothing moved upstream this week." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: tag a release
+        if: steps.d.outputs.changed == '1'
+        env:
+          GIT_AUTHOR_NAME: github-actions[bot]
+          GIT_AUTHOR_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+          GIT_COMMITTER_NAME: github-actions[bot]
+          GIT_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+        run: |
+          scripts/release.sh bump patch
+          ver=$(sed -n 's/^VERSION=//p' config/version)
+          # first changelog bullet = what moved this week
+          note=$(awk -F'|' '/^\| [a-z]/ && $3 != $4 {printf "%s %s -> %s; ", $2, $3, $4}' report.md)
+          sed -i "0,/^- $/s//- ${note:-weekly rebuild}/" CHANGELOG.md
+          git add config/components.list config/version CHANGELOG.md
+          git commit -m "weekly: roll sources, v$ver"
+          git tag "v$ver"
+          git push origin HEAD:${{ github.ref_name }}
+          git push origin "v$ver"
+          cat report.md >> "$GITHUB_STEP_SUMMARY"

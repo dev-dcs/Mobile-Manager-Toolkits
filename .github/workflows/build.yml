@@ -1,0 +1,55 @@
+name: build
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  public:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+          cache: false
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-unknown-linux-musl
+
+      - name: host tools
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q ninja-build autoconf automake libtool pkg-config llvm zip unzip
+          # meson from apt on 24.04 is 1.3.x and can't ID zig's linker ("zig ld");
+          # pip gives 1.8+ which has proper zig support
+          pip install ziglang==0.17.1 cargo-zigbuild 'meson>=1.8'
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            work/dl
+            work/zig-cache
+            work/cargo
+          key: fb-${{ hashFiles('config/components.list', 'recipes/*.sh') }}
+          restore-keys: fb-
+
+      - name: build
+        run: ./build.sh -p public
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FlashBench
+          path: out/*.zip
+
+      - name: release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: scripts/release.sh publish out/FlashBench-${{ github.ref_name }}.zip

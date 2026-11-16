@@ -1,0 +1,3 @@
+avbtool.py is from AOSP platform/external/avb (Apache-2.0).
+https://android.googlesource.com/platform/external/avb/+/refs/heads/main/avbtool.py
+Vendored unmodified for on-device use via `fb avb`.

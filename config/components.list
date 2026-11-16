@@ -1,0 +1,92 @@
+# FlashBench sources - @Dev_DcS
+#
+# name | kind | source | ref | pin | watch | filter | hold
+#
+# kind    git = shallow clone of <ref>, HEAD must equal <pin> (commit)
+#         tar/zip/apk = download <source>, sha256 must equal <pin>
+#         local = directory in this repo
+# watch   repo polled for new releases ("-" = same as source)
+# filter  ERE for release tags, branch:<name> to follow a branch head,
+#         or index:<ERE with one group> to read versions off a download page
+# hold    if set, updates are reported as held with this reason
+
+zlib|git|https://github.com/madler/zlib|v1.4|99623ef7097352da7993ba614161fd6a311e046e|-|^v[0-9]+\.[0-9]+(\.[0-9]+)*$|
+lz4|git|https://github.com/lz4/lz4|v1.11.0|c72c7c0ec132ad2ce2fe9fad7b0c728d9faee2fc|-|^v[0-9]+\.[0-9]+\.[0-9]+$|
+zstd|git|https://github.com/facebook/zstd|v1.5.7|f8745da6ff1ad1e7bab384bd1f9d742439278e99|-|^v[0-9]+\.[0-9]+\.[0-9]+$|
+brotli|git|https://github.com/google/brotli|v1.2.1|db24a98aed38a16de78cc05ca15cdd8dc2a0d92d|-|^v[0-9]+\.[0-9]+\.[0-9]+$|
+xz|git|https://github.com/tukaani-project/xz|v5.8.4|d3e650e63c110e830fd5391e7f8b45df0b91d3da|-|^v5\.[0-9]+\.[0-9]+$|
+pcre2|git|https://github.com/PCRE2Project/pcre2|pcre2-10.49|6f9d7c1373262c541324a16a358785b33ef116cf|-|^pcre2-[0-9]+\.[0-9]+$|
+libusb|git|https://github.com/libusb/libusb|v1.0.30|87a55632db62c9bdc58cd31d3ccfa673f1bb017f|-|^v1\.[0-9]+\.[0-9]+$|
+protobuf|git|https://github.com/protocolbuffers/protobuf|v21.12|f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c|-|^v[0-9]+\.[0-9]+(\.[0-9]+)?$|newer releases need abseil, bump together with an abseil recipe
+libxml2|git|https://github.com/GNOME/libxml2|v2.15.4|96498992efa48d52b0e8b83058bd88dbdaf153c1|-|^v2\.[0-9]+\.[0-9]+$|
+mbedtls|tar|https://github.com/Mbed-TLS/mbedtls/releases/download/mbedtls-3.6.7/mbedtls-3.6.7.tar.bz2|v3.6.7|a7e8bcbec0e6f761b4af24f25677626b35f762f68eef79c08677a363212d11f6|https://github.com/Mbed-TLS/mbedtls|^v3\.6\.[0-9]+$|
+
+android-tools|tar|https://github.com/nmeum/android-tools/releases/download/37.0.0p1/android-tools-37.0.0p1.tar.xz|37.0.0p1|2c6de1abe16b211c7d9f59276217e14fd9e0e18b20e331d3c84358f5dffd576e|https://github.com/nmeum/android-tools|^[0-9]+\.[0-9]+\.[0-9]+(p[0-9]+)?$|
+heimdall|git|https://git.sr.ht/~grimler/Heimdall|v2.2.2|d9554e7fa30a00abed7f0ac86b10e63c2c3b8e20|-|^v[0-9]+\.[0-9]+\.[0-9]+$|
+qdl|git|https://github.com/linux-msm/qdl|v2.9.1|4489c741e38a026e230a8e0bc1423630a57a0f53|-|^v[0-9]+\.[0-9]+(\.[0-9]+)?$|
+spd_dump|git|https://github.com/ilyakurdyukov/spreadtrum_flash|1.20260403|08679125e29b9c339ce1d7ea3f20ce1ffa24b904|-|^1\.[0-9]{8}$|
+payload-dumper-go|git|https://github.com/ssut/payload-dumper-go|2.1.0|c3a50ba8d784764c06143c1f82971cd81a77f9d6|-|^[0-9]+\.[0-9]+\.[0-9]+$|
+magiskboot|apk|https://github.com/topjohnwu/Magisk/releases/download/v31.1/Magisk-v31.1.apk|v31.1|89cefac0a318afa39fb3880c45c87b036c05bc1ebf02a7a715b7f8d7c26ac6e7|https://github.com/topjohnwu/Magisk|^v[0-9]+\.[0-9]+$|
+rkdeveloptool|git|https://github.com/rockchip-linux/rkdeveloptool|master|304f073752fd25c854e1bcf05d8e7f925b1f4e14|-|branch:master|
+sqlite|zip|https://www.sqlite.org/2026/sqlite-amalgamation-3540100.zip|3.54.1|0a9c8e34352dad46006aa82836d5383bff9dc6bc9ce5a60553c05aa30e6ad1f9|https://github.com/sqlite/sqlite|^version-3\.[0-9]+\.[0-9]+$|
+curl|tar|https://github.com/curl/curl/releases/download/curl-8_23_0/curl-8.23.0.tar.xz|curl-8_23_0|8dadd7d2536a314f982ad05a651b713f426bf7d02cc2c76cffb9796f2218e6c5|https://github.com/curl/curl|^curl-[0-9]+_[0-9]+_[0-9]+$|
+mtools|tar|https://ftp.gnu.org/gnu/mtools/mtools-4.0.50.tar.bz2|4.0.50|f3a58e6cfc2634b03c240442548e3b00103692357afc28e1e7104744dd6478b5|https://ftp.gnu.org/gnu/mtools/|index:mtools-([0-9.]+)\.tar\.bz2|
+
+# in-tree tools (tools/), nothing to watch
+atcmd|local|tools|-|-|-|-|
+qcdiag|local|tools|-|-|-|-|
+
+# on-device shell comforts: a full busybox applet set and the nano editor.
+# both are vendored prebuilts (static NDK builds), pinned by sha/commit so the
+# file can never change under us. these are the "busybox-ndk" and "nano-ndk"
+# osm0sis builds; held from the watcher because their repos are archived.
+busybox|raw|https://raw.githubusercontent.com/Magisk-Modules-Repo/busybox-ndk/ad6700620120e3c475df05b0f8bfa7a40e741ee0/busybox-arm64|1.36.1|c629fce4b0dd3ba9775f851d0941e74582115f423258d3a79800f2bd11d30f5c|-|-|vendored prebuilt, upstream repo archived
+nano|git|https://github.com/Magisk-Modules-Repo/nano-ndk|v9.3|424be32d936d53731005c00f399e7400b84d432c|-|-|vendored prebuilt, upstream repo archived
+
+# crypto++ - static lib for odin4 (Samsung Thor archive handling)
+cryptopp|git|https://github.com/weidai11/cryptopp|CRYPTOPP_8_9_0|843d74c7c97f9e19a615b8ff3c0ca06599ca501b|-|^CRYPTOPP_[0-9_]+$|
+
+# Samsung / Exynos
+odin4|git|https://github.com/Llucs/odin4|main|b8630fb39624c76cdce0e196c57f7285d63286d3|-|branch:main|
+samloader-rs|git|https://github.com/topjohnwu/samloader-rs|main|b587530a23d7d9423c330cd04a9d61ed011cc411|-|branch:main|
+exynos-usbdl|git|https://github.com/frederic/exynos-usbdl|master|81599c2a0dd82e120db95231ee6482d04531e326|-|branch:master|
+
+# --- P2: crypto++ ---
+
+# --- Samsung ---
+
+# --- MediaTek ---
+penumbra|git|https://github.com/shomykohai/penumbra|main|ba90a8c6d1524c8cfbfbc7a20cb5d31fe78c4b0d|-|branch:main|
+mtkclient|git|https://github.com/bkerler/mtkclient|main|118a000a83ea31c4f427fe5225abfe964546e05e|-|branch:main|
+
+# --- Unisoc ---
+pacextractor|local|tools/pacextractor|-|-|-|-|
+
+# --- Oppo ---
+oppo_decrypt|git|https://github.com/bkerler/oppo_decrypt|master|3456e850fb408f4dfab43e9788970c9be2caa743|-|branch:master|
+
+# --- Qualcomm EDL (bkerler) ---
+edl|git|https://github.com/bkerler/edl|master|1cda1a616748d608667b2d13b73a28d3197ceb45|-|branch:master|
+
+# --- Engineering data ---
+soc-bootroms|git|https://github.com/Zenofex/SoC-BootROMs|main|cacc2a6af00e29b8a67c83c128b3516487aa2eec|-|branch:main|
+unlock-wall|git|https://github.com/zenfyrdev/bootloader-unlock-wall-of-shame|main|b3304f1cad8fa8e6a20c1b248f0a27ba82c8099b|-|branch:main|
+
+# --- iOS ---
+openssl|tar|https://github.com/openssl/openssl/releases/download/openssl-3.6.5/openssl-3.6.5.tar.gz|3.6.5|a2157c2830efdec3788939b00c9b0638306d3f0bbb76dc4832ee503bb397df98|https://github.com/openssl/openssl|^openssl-3\.[0-9]+\.[0-9]+$|
+lzfse|git|https://github.com/lzfse/lzfse|lzfse-1.0|e634ca58b4821d9f3d560cdc6df5dec02ffc93fd|-|^lzfse-[0-9.]+$|
+libgeneral|git|https://github.com/tihmstar/libgeneral|master|7b6c530efca87598b1492156e99315603c1a72b4|-|branch:master|
+img4tool|git|https://github.com/tihmstar/img4tool|master|381f5f755bdafe73eddec4eb83c25d21488621ab|-|branch:master|
+img3tool|git|https://github.com/tihmstar/img3tool|master|e3b1f0b2619eb72c53fc92fc011ec96309c28eee|-|branch:master|
+libirecovery|git|https://github.com/libimobiledevice/libirecovery|master|3301fe7d834a485b368cd7edf20f7535d6d598b4|-|branch:master|
+libimobiledevice|git|https://github.com/libimobiledevice/libimobiledevice|master|fa0f79190142bc309307967c058f89c1b36eb6b8|-|branch:master|
+libplist|git|https://github.com/libimobiledevice/libplist|master|3cfe22475244cc1e924b6fd189234c130d6c5914|-|branch:master|
+limd-glue|git|https://github.com/libimobiledevice/libimobiledevice-glue|master|10ddafa16458a012bcbd3e83a6ab36a032dc84d8|-|branch:master|
+libusbmuxd|git|https://github.com/libimobiledevice/libusbmuxd|master|93eb168bf6b07472d17781328c21df0c60300524|-|branch:master|
+libtatsu|git|https://github.com/libimobiledevice/libtatsu|master|d8928042bcbb7048bc87a994d3e84c29eacf2f32|-|branch:master|
+idevice|git|https://github.com/jkcoxson/idevice|master|89702099f4d7552f704f93b4526756abda319ceb|-|branch:master|
+gaster|git|https://github.com/0x7ff/gaster|main|7fffffff38a1bed1cdc1c5bae0df70f14395129b|-|branch:main|
+palera1n|git|https://github.com/palera1n/palera1n-c|master|3451b99ec04704e0236c4b1f9682452c06028f04|-|branch:master|
+futurerestore|git|https://github.com/futurerestore/futurerestore|main|22a5d89bdec6e1c441012d63822184c93530b7e5|-|branch:main|
+
+# --- AOSP avbtool (python, vendored) ---

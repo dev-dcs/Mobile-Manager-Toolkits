@@ -1,0 +1,8 @@
+#!/system/bin/sh
+# nano launcher - points the editor at its own terminfo so it draws correctly
+# in any root shell. The real binary is nano.bin next to this script.
+# @Dev_DcS, after the nano-ndk launcher by osm0sis.
+
+here=$(dirname "$0")
+[ "$1" = "--term" ] && { term=$2; shift 2; } || term=${TERM:-screen}
+TERMINFO=/system/etc/terminfo TERM=$term exec "$here/nano.bin" "$@"

@@ -1,0 +1,5 @@
+# sourced by build.sh after the profile, keep secrets here
+
+# ntfy topic for pushes to your other devices (fb watch, notify=ntfy|both)
+# pick a long random topic name, anyone who knows it can read it
+NTFY_URL=

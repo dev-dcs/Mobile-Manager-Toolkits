@@ -1,0 +1,17 @@
+#!/system/bin/sh
+# @BIN@ reads HOME and TMPDIR, Android gives it "/" and no /tmp - @Dev_DcS
+
+if [ -z "$TMPDIR" ] || [ ! -w "$TMPDIR" ]; then
+	TMPDIR=/data/local/tmp
+fi
+if [ -z "$HOME" ] || [ "$HOME" = / ] || [ ! -w "$HOME" ]; then
+	if [ "$(id -u)" = 0 ]; then
+		HOME=/data/local/tmp/flashbench/home
+	else
+		HOME=$TMPDIR
+	fi
+fi
+[ -d "$HOME" ] || mkdir -p "$HOME" 2>/dev/null
+export TMPDIR HOME
+
+exec /system/bin/.@BIN@ "$@"

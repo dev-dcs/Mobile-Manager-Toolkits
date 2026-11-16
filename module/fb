@@ -1,0 +1,63 @@
+#!/system/bin/sh
+# FlashBench - @Dev_DcS
+
+FB_MOD=${FB_MOD:-/data/adb/modules/@MODID@}
+export FB_MOD
+
+usage() {
+	cat <<EOF
+FlashBench $(sed -n 's/^version=//p' "$FB_MOD/module.prop" 2>/dev/null)
+
+  fb usb [-w]          what is plugged in and in which mode
+  fb info              summary of the connected device (adb / fastboot / odin)
+  fb doctor            check this phone: root, usb host, binaries
+  fb forensic ...      triage, acquire, image, apps, verify
+  fb debug ...         logcat, crash, boot, selinux, app, snapshot, diff, screen, record
+  fb log ...           rotating logcat catcher for THIS phone (start/stop/save/boot)
+  fb samsung ...       unpack firmware, read pit, build heimdall command
+  fb ota ...           list / extract payload.bin
+  fb payload ...       inspect / dump / repack A/B payload.bin
+  fb avb ...           Android Verified Boot (avbtool) + disable-verification
+  fb aik ...           edit boot images (Android Image Kitchen style)
+  fb modem ...         baseband: backup, AT, DIAG NV/EFS, bands, carrier config, MBN
+  fb ak3 ...           AnyKernel3 zip -> bootable boot.img
+  fb unroot ...        remove Magisk / KernelSU / APatch from a connected device
+  fb samsung ...       Samsung firmware: unpack, read pit, flash via odin4/heimdall, download
+  fb mtk ...           MediaTek: flash, readback, unlock (penumbra/mtkclient)
+  fb unisoc ...        Unisoc: spd_dump, sfd_tool, pacextractor
+  fb oppo ...          Oppo/Realme/OnePlus: .ofp/.ops firmware decrypt
+  fb eng ...           bootloader unlock lookup, eng root check, SoC BootROMs
+  fb ios ...           Apple: idevice tools, irecovery, img4, gaster, palera1n
+  fb watch ...         upstream source watcher
+  fb tools             bundled binaries and versions
+
+run any of them with -h for details
+EOF
+}
+
+if [ ! -r "$FB_MOD/module.prop" ]; then
+	if [ "$(id -u)" != 0 ]; then
+		echo "fb needs root: su -c fb $*" >&2
+	else
+		echo "fb: module not found at $FB_MOD" >&2
+	fi
+	exit 1
+fi
+
+case $1 in
+	''|-h|--help|help) usage ;;
+	-v|--version|version) sed -n '1,5p' "$FB_MOD/build.info" ;;
+	tools)
+		awk '$1 == "bin" { sub(/^\./, "", $3); print $3 }' "$FB_MOD/build.info" | while read -r n; do
+			if [ -e "/system/bin/fb-$n" ]; then printf 'fb-%s ' "$n"; else printf '%s ' "$n"; fi
+		done
+		echo
+		echo
+		sed -n 's/^src /  /p' "$FB_MOD/build.info"
+		;;
+	*)
+		cmd=$1; shift
+		[ -f "$FB_MOD/libexec/fb-$cmd.sh" ] || { echo "fb: unknown command '$cmd'" >&2; usage >&2; exit 1; }
+		exec sh "$FB_MOD/libexec/fb-$cmd.sh" "$@"
+		;;
+esac

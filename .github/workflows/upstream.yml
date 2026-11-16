@@ -1,0 +1,24 @@
+name: upstream
+
+on:
+  schedule:
+    - cron: '17 9 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: check pinned sources against upstream
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NTFY_URL: ${{ secrets.NTFY_URL }}
+        run: scripts/upstream-check.sh --md report.md --issue
+
+      - run: cat report.md >> "$GITHUB_STEP_SUMMARY"
