@@ -11,7 +11,7 @@
 # hold    if set, updates are reported as held with this reason
 
 zlib|git|https://github.com/madler/zlib|v1.4|99623ef7097352da7993ba614161fd6a311e046e|-|^v[0-9]+\.[0-9]+(\.[0-9]+)*$|
-lz4|git|https://github.com/lz4/lz4|v1.11.0|c72c7c0ec132ad2ce2fe9fad7b0c728d9faee2fc|-|^v[0-9]+\.[0-9]+\.[0-9]+$|
+lz4|git|https://github.com/lz4/lz4|v1.11.1|aa4647fad575d01a874aaaadcdbe8e6a40e072f5|-|^v[0-9]+\.[0-9]+\.[0-9]+$|
 zstd|git|https://github.com/facebook/zstd|v1.5.7|f8745da6ff1ad1e7bab384bd1f9d742439278e99|-|^v[0-9]+\.[0-9]+\.[0-9]+$|
 brotli|git|https://github.com/google/brotli|v1.2.1|db24a98aed38a16de78cc05ca15cdd8dc2a0d92d|-|^v[0-9]+\.[0-9]+\.[0-9]+$|
 xz|git|https://github.com/tukaani-project/xz|v5.8.4|d3e650e63c110e830fd5391e7f8b45df0b91d3da|-|^v5\.[0-9]+\.[0-9]+$|

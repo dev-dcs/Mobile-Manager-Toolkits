@@ -1,3 +1,7 @@
+## v1.1.1
+
+-  component   status  ->  pinned ;  lz4   update  ->  v1.11.0 ;  protobuf   held  ->  v21.12 ;  busybox   error  ->  1.36.1 ; 
+
 ## v1.1.0
 
 Shell comforts and a logcat catcher.
