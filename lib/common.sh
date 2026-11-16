@@ -94,9 +94,16 @@ fetch_component() {
 		fi
 		got=$(git -C "$dst" rev-parse HEAD)
 		if [ "$got" != "$pin" ]; then
-			# branch moved or tag got re-pointed, try to get the exact pin
-			git -C "$dst" fetch -q --depth 1 origin "$pin" 2>/dev/null ||
-				git -C "$dst" fetch -q --unshallow 2>/dev/null || true
+			# branch moved or tag got re-pointed, try to get the exact pin.
+			# never --depth on a deep clone: it turns it shallow again and the
+			# commit count drops to 1 (libgeneral reported "1", img4tool died)
+			if [ "$deep" = 1 ]; then
+				git -C "$dst" cat-file -e "$pin^{commit}" 2>/dev/null ||
+					git -C "$dst" fetch -q origin "$pin" 2>/dev/null || true
+			else
+				git -C "$dst" fetch -q --depth 1 origin "$pin" 2>/dev/null ||
+					git -C "$dst" fetch -q --unshallow 2>/dev/null || true
+			fi
 			git -C "$dst" -c advice.detachedHead=false checkout -q "$pin" 2>/dev/null ||
 				die "$n: $ref is at $got, pinned $pin is not reachable"
 		fi
