@@ -1,19 +1,3 @@
-## v1.2.0
-
-Everyday tools and a Linux workbench.
-
-- fb distro: Ubuntu 24.04 arm64 in a chroot with the dev toolset (gcc/clang, JDK 17
-  and 21, Rust, Go, Python, AOSP build deps, deb/rpm packaging, podman, debootstrap).
-  install, enter, run, apt, sync, status, umount, remove.
-- new static tools: strace, jq, tree, htop, tmux, file, patchelf, rsync, zstd,
-  dtc + fdtdump/fdtget/fdtput/fdtoverlay, mksquashfs/unsquashfs,
-  mkfs/fsck/dump.erofs, debugfs, dumpe2fs, dump.f2fs, resize.f2fs.
-- strace is back, built against its own bundled kernel headers.
-- spd_dump_tk (TomKing062's spreadtrum_flash) now backs `fb unisoc sfd`. sfd_tool
-  itself still has no build without GTK.
-- tmux keeps its socket in /data/local/tmp; htop and tmux use nano's terminfo.
-- README: curl and xz were already in the public zip, the table says so now.
-
 ## v1.1.1
 
 -  component   status  ->  pinned ;  lz4   update  ->  v1.11.0 ;  protobuf   held  ->  v21.12 ;  busybox   error  ->  1.36.1 ; 
