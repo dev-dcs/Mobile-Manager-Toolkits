@@ -1,0 +1,174 @@
+# fb distro - what goes into the Ubuntu 24.04 workbench
+# one package per line. anything not in the archive is skipped and listed.
+# your own extras go in /data/local/tmp/flashbench/distro/extra.list
+
+# compilers, debuggers, build systems
+build-essential
+gcc
+g++
+clang
+llvm
+lld
+lldb
+binutils
+gdb
+gdb-multiarch
+libc6-dev
+linux-libc-dev
+make
+cmake
+ninja-build
+meson
+autoconf
+automake
+autopoint
+libtool
+m4
+pkg-config
+ccache
+distcc
+
+# source control and patching
+git
+git-lfs
+subversion
+mercurial
+patch
+diffutils
+quilt
+repo
+
+# network and transfer
+wget
+aria2
+rsync
+openssh-client
+ca-certificates
+iproute2
+iputils-ping
+
+# inspect and debug
+strace
+ltrace
+file
+patchelf
+nasm
+yasm
+
+# languages
+rustc
+cargo
+golang-go
+python3
+python3-pip
+python3-venv
+python3-dev
+perl
+ruby
+lua5.4
+openjdk-17-jdk
+openjdk-21-jdk
+
+# shell comfort
+jq
+tree
+tmux
+screen
+htop
+btop
+bc
+vim-tiny
+less
+sudo
+
+# kernel and boot images
+bison
+flex
+cpio
+libssl-dev
+libelf-dev
+libncurses-dev
+dwarves
+device-tree-compiler
+u-boot-tools
+abootimg
+mkbootimg
+coccinelle
+sparse
+
+# compression
+zstd
+lzop
+gzip
+bzip2
+tar
+zip
+unzip
+
+# AOSP build deps
+gnupg
+zlib1g-dev
+libxml2-utils
+xsltproc
+fontconfig
+libgl1-mesa-dev
+libx11-dev
+x11proto-core-dev
+libncurses6
+libtinfo6
+libstdc++6
+libffi-dev
+libbz2-dev
+libreadline-dev
+libsqlite3-dev
+
+# filesystems and partitions
+erofs-utils
+squashfs-tools
+e2fsprogs
+f2fs-tools
+btrfs-progs
+exfatprogs
+dosfstools
+gdisk
+parted
+
+# packaging
+dpkg-dev
+debhelper
+dh-make
+devscripts
+fakeroot
+fakechroot
+lintian
+equivs
+sbuild
+pbuilder
+checkinstall
+reprepro
+rpm
+rpmlint
+createrepo-c
+flatpak-builder
+
+# rootfs, containers, images
+debootstrap
+mmdebstrap
+arch-install-scripts
+live-build
+podman
+buildah
+skopeo
+xorriso
+genisoimage
+
+# base system
+bash
+coreutils
+util-linux
+findutils
+grep
+sed
+gawk
+dpkg
+apt

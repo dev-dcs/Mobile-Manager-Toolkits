@@ -11,7 +11,7 @@
 # hold    if set, updates are reported as held with this reason
 
 zlib|git|https://github.com/madler/zlib|v1.4|99623ef7097352da7993ba614161fd6a311e046e|-|^v[0-9]+\.[0-9]+(\.[0-9]+)*$|
-lz4|git|https://github.com/lz4/lz4|v1.11.0|c72c7c0ec132ad2ce2fe9fad7b0c728d9faee2fc|-|^v[0-9]+\.[0-9]+\.[0-9]+$|
+lz4|git|https://github.com/lz4/lz4|v1.11.1|aa4647fad575d01a874aaaadcdbe8e6a40e072f5|-|^v[0-9]+\.[0-9]+\.[0-9]+$|
 zstd|git|https://github.com/facebook/zstd|v1.5.7|f8745da6ff1ad1e7bab384bd1f9d742439278e99|-|^v[0-9]+\.[0-9]+\.[0-9]+$|
 brotli|git|https://github.com/google/brotli|v1.2.1|db24a98aed38a16de78cc05ca15cdd8dc2a0d92d|-|^v[0-9]+\.[0-9]+\.[0-9]+$|
 xz|git|https://github.com/tukaani-project/xz|v5.8.4|d3e650e63c110e830fd5391e7f8b45df0b91d3da|-|^v5\.[0-9]+\.[0-9]+$|
@@ -43,6 +43,23 @@ qcdiag|local|tools|-|-|-|-|
 busybox|raw|https://raw.githubusercontent.com/Magisk-Modules-Repo/busybox-ndk/ad6700620120e3c475df05b0f8bfa7a40e741ee0/busybox-arm64|1.36.1|c629fce4b0dd3ba9775f851d0941e74582115f423258d3a79800f2bd11d30f5c|-|-|vendored prebuilt, upstream repo archived
 nano|git|https://github.com/Magisk-Modules-Repo/nano-ndk|v9.3|424be32d936d53731005c00f399e7400b84d432c|-|-|vendored prebuilt, upstream repo archived
 
+# everyday command line tools, static so they run straight from a root shell
+strace|tar|https://github.com/strace/strace/releases/download/v7.3/strace-7.3.tar.xz|v7.3|529634c40910895a9a1f3c5c1e65da2ca9ed72fb158dfc4bcc89efdf05e39b72|https://github.com/strace/strace|^v[0-9]+\.[0-9]+$|
+ncurses|tar|https://ftp.gnu.org/gnu/ncurses/ncurses-6.6.tar.gz|6.6|355b4cbbed880b0381a04c46617b7656e362585d52e9cf84a67e2009b749ff11|https://ftp.gnu.org/gnu/ncurses/|index:ncurses-([0-9.]+)\.tar\.gz|
+libevent|tar|https://github.com/libevent/libevent/releases/download/release-2.1.12-stable/libevent-2.1.12-stable.tar.gz|release-2.1.12-stable|92e6de1be9ec176428fd2367677e61ceffc2ee1cb119035037a27d346b0403bb|https://github.com/libevent/libevent|^release-2\.[0-9]+\.[0-9]+-stable$|
+tmux|tar|https://github.com/tmux/tmux/releases/download/3.8/tmux-3.8.tar.gz|3.8|e79c699c7e949dccd0a4a125e17b8d1261e311b16979dbc8eb34542f3966d82e|https://github.com/tmux/tmux|^[0-9]+\.[0-9]+[a-z]?$|
+htop|tar|https://github.com/htop-dev/htop/releases/download/3.5.3/htop-3.5.3.tar.xz|3.5.3|a8b164386494cb85bb255a415a3f5f80afe7a0c4491da5d113b3a0f951087e65|https://github.com/htop-dev/htop|^[0-9]+\.[0-9]+\.[0-9]+$|
+jq|tar|https://github.com/jqlang/jq/releases/download/jq-1.8.2/jq-1.8.2.tar.gz|jq-1.8.2|71b8d6e8f5fe81f6c6d0d110e3892251f6ce76ed095abd315e26e6e1193af3af|https://github.com/jqlang/jq|^jq-[0-9]+\.[0-9]+(\.[0-9]+)?$|
+tree|git|https://github.com/Old-Man-Programmer/tree|2.3.2|1a41b51bea1cec4109eb9f726370449b384b4576|-|^[0-9]+\.[0-9]+\.[0-9]+$|
+patchelf|tar|https://github.com/NixOS/patchelf/releases/download/0.19.3/patchelf-0.19.3.tar.bz2|0.19.3|20dbe23e9dbc4ad769078a867ad002c04297a069ff93c95fb72242dd55d4dd6f|https://github.com/NixOS/patchelf|^[0-9]+\.[0-9]+(\.[0-9]+)?$|
+file|tar|https://astron.com/pub/file/file-5.48.tar.gz|FILE5_48|ed14656883b23a364b4057c05595d93252da9bc473d30106519519d0da141283|https://github.com/file/file|^FILE5_[0-9]+$|
+rsync|tar|https://download.samba.org/pub/rsync/src/rsync-3.5.2.tar.gz|v3.5.2|a10d591825251e070f74c98df3daad195def4ed81b4a2de16169026aea33f6c8|https://github.com/RsyncProject/rsync|^v3\.[0-9]+\.[0-9]+$|
+dtc|git|https://github.com/dgibson/dtc|v1.8.1|8f48565e5cfedc74d3f7512f1e0188e9d85dc1de|-|^v[0-9]+\.[0-9]+\.[0-9]+$|
+squashfs-tools|git|https://github.com/plougher/squashfs-tools|4.7.5|708c59ae80853b0845017c33b42e56061cc546cd|-|^[0-9]+\.[0-9]+(\.[0-9]+)?$|
+e2fsprogs|git|https://github.com/tytso/e2fsprogs|v1.47.4|7ee1d505ef3b37831215f490411f346fe57e9053|-|^v1\.[0-9]+\.[0-9]+$|
+f2fs-tools|git|https://github.com/jaegeuk/f2fs-tools|v1.9.0|c6d5ec2faa70bb0d5faf7ee502ef6f3fc4d3acaa|-|^v[0-9]+\.[0-9]+\.[0-9]+$|
+erofs-utils|git|https://github.com/erofs/erofs-utils|v1.9.4|f36cadb5c563995ab3aa8572a60ed6b721b9557d|-|^v[0-9]+\.[0-9]+(\.[0-9]+)?$|
+
 # crypto++ - static lib for odin4 (Samsung Thor archive handling)
 cryptopp|git|https://github.com/weidai11/cryptopp|CRYPTOPP_8_9_0|843d74c7c97f9e19a615b8ff3c0ca06599ca501b|-|^CRYPTOPP_[0-9_]+$|
 
@@ -61,6 +78,7 @@ mtkclient|git|https://github.com/bkerler/mtkclient|main|118a000a83ea31c4f427fe52
 
 # --- Unisoc ---
 pacextractor|local|tools/pacextractor|-|-|-|-|
+spd_dump_tk|git|https://github.com/TomKing062/spreadtrum_flash|main|607f70147763c878e46d7b6eeccc2a6cd34b8f61|-|branch:main|
 
 # --- Oppo ---
 oppo_decrypt|git|https://github.com/bkerler/oppo_decrypt|master|3456e850fb408f4dfab43e9788970c9be2caa743|-|branch:master|

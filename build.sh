@@ -113,7 +113,7 @@ for n in "${ORDER[@]}"; do
 	for h in $(recipe_var "$(recipe_file "$n")" hostneeds); do need+=("$h"); done
 	case $n in
 		qdl) need+=(meson) ;;
-		libusb|strace|curl|libplist|limd-glue|libgeneral|libusbmuxd|libtatsu|libirecovery|libimobiledevice|img4tool|img3tool) need+=(autoreconf) ;;
+		libusb|f2fs-tools|erofs-utils|curl|libplist|limd-glue|libgeneral|libusbmuxd|libtatsu|libirecovery|libimobiledevice|img4tool|img3tool) need+=(autoreconf) ;;
 		payload-dumper-go) need+=(go) ;;
 		samloader-rs|penumbra|idevice) need+=(cargo) ;;
 	esac

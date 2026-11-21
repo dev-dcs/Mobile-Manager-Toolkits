@@ -21,7 +21,7 @@ by @Dev_DcS
 | **Qualcomm** DIAG | `qcdiag` (NV/EFS/SPC/bands) |
 | **MediaTek** V5/V6 XFlash | `antumbra` (penumbra, Rust native) |
 | **MediaTek** V3/Legacy | `mtkclient` (Python, needs Termux) |
-| **Unisoc / Spreadtrum** | `spd_dump`, `sfd_tool` (CLI), `pacextractor` |
+| **Unisoc / Spreadtrum** | `spd_dump`, `spd_dump_tk` (TomKing062 fork, the CLI behind sfd_tool), `pacextractor` |
 | **Rockchip** maskrom | `rkdeveloptool` |
 | **Oppo / Realme / OnePlus** | `oppo_decrypt` (Python, .ofp/.ops) |
 | **Apple / iOS** (OTG host) | `irecovery`, `img4tool`, `img3tool`, `gaster` (checkm8), `idevice-tools` (Rust), `libimobiledevice` tools |
@@ -29,11 +29,14 @@ by @Dev_DcS
 | boot images | `magiskboot`, `fb aik` (Android Image Kitchen style) |
 | OTA payload.bin | `payload-dumper-go` |
 | modem / baseband | `atcmd` (AT console), `mtools` (FAT modem image) |
-| compression | `lz4 brotli xz` |
-| analysis | `sqlite3`, `strace` |
-| shell | `busybox` (full applet set), `nano` (with terminfo) |
+| compression | `lz4 brotli xz zstd` |
+| analysis | `sqlite3`, `strace`, `file`, `jq`, `patchelf` |
+| shell | `busybox` (full applet set), `nano` (with terminfo), `htop`, `tmux`, `tree`, `rsync` |
+| filesystem images | `mkfs.erofs` `fsck.erofs` `dump.erofs`, `mksquashfs` `unsquashfs`, `debugfs` `dumpe2fs`, `dump.f2fs` `resize.f2fs` |
+| device tree | `dtc`, `fdtdump`, `fdtget`, `fdtput`, `fdtoverlay` |
+| network | `curl` |
+| workbench | `fb distro`: Ubuntu 24.04 in a chroot with compilers, JDKs, packaging tools (see below) |
 | engineering | bootloader unlock lookup (wall-of-shame DB), SoC BootROM dumps |
-| master only | `curl` |
 
 `qcdiag`, `atcmd`, and `pacextractor` are native tools in `tools/`, built here. Everything else is upstream.
 
@@ -58,6 +61,7 @@ If the ROM already has a tool in `/system/bin`, the ROM keeps it and ours instal
     fb eng ...             bootloader unlock lookup, eng root check, SoC BootROMs
     fb ios ...             Apple: idevice, irecovery, img4, gaster, palera1n, futurerestore
     fb log ...             rotating logcat catcher for this phone (start/stop/save/boot)
+    fb distro ...          Ubuntu 24.04 workbench: install, enter, run, apt, sync, remove
     fb watch ...           upstream source watcher
 
 `fb ak3`, `fb unroot`, `fb modem` always back up before writing. `fb modem` never
@@ -67,6 +71,27 @@ writes device identities (IMEI/MEID/ESN). `fb unroot` refuses a half-clean witho
 Config, adb keys and output all live under `/data/local/tmp/flashbench/`
 (output in `out/`). Nothing is written to the target except what adb itself
 needs (`fb debug record` uses a temp file and removes it).
+
+## Workbench (fb distro)
+
+Everything that can't be one static binary (gcc/clang, JDK 17 and 21, Rust, Go,
+Python, AOSP build deps, dpkg/rpm packaging, podman, debootstrap...) lives in an
+Ubuntu 24.04 arm64 chroot.
+
+    fb distro install          download the base image (~30 MB), then the package list
+    fb distro install --base   just the base system
+    fb distro enter            root shell inside
+    fb distro run make -j8     one command inside
+    fb distro apt install foo  apt-get inside
+    fb distro sync             install what's missing from the list
+    fb distro umount           unmount when done
+    fb distro remove           delete it (asks first)
+
+- The full list takes about 6-8 GB on /data. Packages not in the archive are skipped and listed.
+- The list is `share/distro/packages.list`, your own extras go in
+  `/data/local/tmp/flashbench/distro/extra.list`.
+- Internal storage is `/sdcard` inside, USB devices are reachable through `/dev`.
+- The rootfs stays when the module is uninstalled, run `fb distro remove` first if you want the space back.
 
 ## Install-time conflict check
 
@@ -103,7 +128,7 @@ public zip tracks upstream without a hand on the wheel.
 Host needs: zig 0.17 (`pip install ziglang==0.17.1`), Rust (`rustup`, with
 `cargo-zigbuild` from pip), cmake, ninja, meson 1.8+ (get it from pip, not your
 distro - older meson can't figure out zig's linker), autotools, pkg-config, go,
-llvm-strip, git, curl, zip.
+flex, bison, llvm-strip, git, curl, zip.
 
     ./build.sh --list              what the public profile pulls in
     ./build.sh                     public zip in out/
