@@ -24,10 +24,11 @@ FlashBench $(sed -n 's/^version=//p' "$FB_MOD/module.prop" 2>/dev/null)
   fb unroot ...        remove Magisk / KernelSU / APatch from a connected device
   fb samsung ...       Samsung firmware: unpack, read pit, flash via odin4/heimdall, download
   fb mtk ...           MediaTek: flash, readback, unlock (penumbra/mtkclient)
-  fb unisoc ...        Unisoc: spd_dump, sfd_tool, pacextractor
+  fb unisoc ...        Unisoc: spd_dump, spd_dump_tk, pacextractor
   fb oppo ...          Oppo/Realme/OnePlus: .ofp/.ops firmware decrypt
   fb eng ...           bootloader unlock lookup, eng root check, SoC BootROMs
   fb ios ...           Apple: idevice tools, irecovery, img4, gaster, palera1n
+  fb distro ...        Ubuntu 24.04 workbench (chroot) with the full dev toolset
   fb watch ...         upstream source watcher
   fb tools             bundled binaries and versions
 

@@ -1,5 +1,5 @@
 #!/system/bin/sh
-# fb unisoc - Unisoc/Spreadtrum tools: spd_dump, sfd_tool, pacextractor, bkerler
+# fb unisoc - Unisoc/Spreadtrum tools: spd_dump, spd_dump_tk, pacextractor, bkerler
 # @Dev_DcS
 
 . "${0%/*}/../lib/common.sh"
@@ -12,7 +12,7 @@ fb unisoc <command>
   readback <args>             spd_dump readback
   pac list <file.pac>         list partitions in a PAC firmware
   pac extract <file.pac> [-p boot,system] [dir]
-  sfd <args>                  sfd_tool CLI pass-through (--no-gui)
+  sfd <args>                  spd_dump_tk pass-through (TomKing062 fork, the CLI behind sfd_tool)
   bk <args>                   bkerler/unisoc python pass-through
 
 the device must be in download mode (powered off, hold vol-down, plug USB;
@@ -21,7 +21,7 @@ EOF
 }
 
 SPD=$(command -v spd_dump || command -v fb-spd_dump) || SPD=""
-SFD=$(command -v sfd_tool || command -v fb-sfd_tool) || SFD=""
+SFD=$(command -v spd_dump_tk || command -v fb-spd_dump_tk) || SFD=""
 PAC=$(command -v pacextractor || command -v fb-pacextractor) || PAC=""
 BK_PY="$FB_MOD/python/bkerler-unisoc"
 
@@ -42,8 +42,8 @@ pac)
 	$PAC "$@"
 	;;
 sfd)
-	[ -n "$SFD" ] || die "sfd_tool not in this build"
-	$SFD --no-gui "$@"
+	[ -n "$SFD" ] || die "spd_dump_tk not in this build"
+	$SFD "$@"
 	;;
 bk)
 	# TODO: no component for bkerler/unisoc yet, so this always falls through
